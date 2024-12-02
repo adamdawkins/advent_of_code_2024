@@ -13,10 +13,10 @@ defmodule Day1 do
   end
 
   def part2(input) do
-    {list1, list2} = input |> parse_input() |> Enum.unzip()
+    {left, right} = input |> parse_input() |> Enum.unzip()
 
-    Enum.map(list1, fn x ->
-      Enum.count(list2, fn y -> y == x end) * x
+    Enum.map(left, fn x ->
+      Enum.count(right, fn y -> y == x end) * x
     end)
     |> Enum.sum()
   end
@@ -29,7 +29,7 @@ defmodule Day1 do
 
   # Helper function to sort and zip the lists
   defp sort_and_zip(parsed) do
-    {list1, list2} = Enum.unzip(parsed)
-    Enum.zip(Enum.sort(list1), Enum.sort(list2))
+    {left, right} = Enum.unzip(parsed)
+    Enum.zip(Enum.sort(left), Enum.sort(right))
   end
 end
