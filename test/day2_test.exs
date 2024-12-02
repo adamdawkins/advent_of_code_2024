@@ -18,6 +18,8 @@ defmodule Day2Test do
   # decreasing. 8 6 4 4 1: Unsafe because 4 4 is neither an increase or a
   # decrease. 1 3 6 7 9: Safe because the levels are all increasing by 1, 2, or
   # 3.
+  #
+  # So, in this example, 2 reports are safe.
 
   test "calculates the safety of each report" do
     input = [
@@ -29,6 +31,6 @@ defmodule Day2Test do
       "1 3 6 7 9"
     ]
 
-    assert Day2.part1(input) == [true, false, false, false, false, true]
+    assert Day2.part1(input) == 2
   end
 end

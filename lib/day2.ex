@@ -9,6 +9,7 @@ defmodule Day2 do
     |> Enum.map(&String.split(&1, ~r/\s+/, trim: true))
     |> Enum.map(fn report -> Enum.map(report, &String.to_integer/1) end)
     |> Enum.map(&strictly_monotonic_and_gradual?/1)
+    |> Enum.count(& &1)
   end
 
   def part2(_input) do
