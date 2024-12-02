@@ -29,7 +29,6 @@ defmodule Day2Test do
       "1 3 6 7 9"
     ]
 
-    # check strict monotonicity for now
-    assert Day2.part1(input) == [true, true, true, false, false, true]
+    assert Day2.part1(input) == [true, false, false, false, false, true]
   end
 end
