@@ -12,7 +12,7 @@ defmodule Day1 do
     |> then(fn {list1, list2} ->
       Enum.zip(Enum.sort(list1), Enum.sort(list2))
     end)
-    |> Enum.map(fn {a, b} -> b - a end)
+    |> Enum.map(fn {a, b} -> abs(b - a) end)
     |> Enum.sum()
   end
 
