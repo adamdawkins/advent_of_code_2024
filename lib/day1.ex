@@ -6,26 +6,30 @@ defmodule Day1 do
 
   def part1(input) do
     input
-    |> Enum.map(&String.split(&1, ~r/\s+/, trim: true))
-    |> Enum.map(fn [a, b] -> {String.to_integer(a), String.to_integer(b)} end)
-    |> Enum.unzip()
-    |> then(fn {list1, list2} ->
-      Enum.zip(Enum.sort(list1), Enum.sort(list2))
-    end)
+    |> parse_input()
+    |> sort_and_zip()
     |> Enum.map(fn {a, b} -> abs(b - a) end)
     |> Enum.sum()
   end
 
   def part2(input) do
+    {list1, list2} = input |> parse_input() |> Enum.unzip()
+
+    Enum.map(list1, fn x ->
+      Enum.count(list2, fn y -> y == x end) * x
+    end)
+    |> Enum.sum()
+  end
+
+  defp parse_input(input) do
     input
     |> Enum.map(&String.split(&1, ~r/\s+/, trim: true))
     |> Enum.map(fn [a, b] -> {String.to_integer(a), String.to_integer(b)} end)
-    |> Enum.unzip()
-    |> then(fn {list1, list2} ->
-      Enum.map(list1, fn x ->
-        Enum.count(list2, fn y -> y == x end) * x
-      end)
-    end)
-    |> Enum.sum()
+  end
+
+  # Helper function to sort and zip the lists
+  defp sort_and_zip(parsed) do
+    {list1, list2} = Enum.unzip(parsed)
+    Enum.zip(Enum.sort(list1), Enum.sort(list2))
   end
 end
