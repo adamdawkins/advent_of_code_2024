@@ -16,7 +16,16 @@ defmodule Day1 do
     |> Enum.sum()
   end
 
-  def part2(_input) do
-    "Part 2"
+  def part2(input) do
+    input
+    |> Enum.map(&String.split(&1, ~r/\s+/, trim: true))
+    |> Enum.map(fn [a, b] -> {String.to_integer(a), String.to_integer(b)} end)
+    |> Enum.unzip()
+    |> then(fn {list1, list2} ->
+      Enum.map(list1, fn x ->
+        Enum.count(list2, fn y -> y == x end) * x
+      end)
+    end)
+    |> Enum.sum()
   end
 end
