@@ -16,7 +16,7 @@ defmodule Day1 do
     {left, right} = input |> parse_input() |> Enum.unzip()
 
     Enum.map(left, fn x ->
-      Enum.count(right, fn y -> y == x end) * x
+      Enum.count(right, &(&1 == x)) * x
     end)
     |> Enum.sum()
   end
