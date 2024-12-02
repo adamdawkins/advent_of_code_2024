@@ -6,6 +6,7 @@ defmodule AoC.MixProject do
       app: :advent_of_code_2024,
       version: "0.1.0",
       elixir: "~> 1.17",
+      escript: [main_module: AoCRunner],
       start_permanent: Mix.env() == :prod,
       deps: deps()
     ]
