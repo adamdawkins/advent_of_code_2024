@@ -14,11 +14,12 @@ defmodule Day1 do
 
   def part2(input) do
     {left, right} = input |> parse_input() |> Enum.unzip()
+     frequencies = Enum.frequencies(right)
 
-    Enum.map(left, fn x ->
-      Enum.count(right, &(&1 == x)) * x
+    Enum.reduce(left, 0, fn x, acc ->
+      acc + Map.get(frequencies, x, 0) * x
     end)
-    |> Enum.sum()
+
   end
 
   defp parse_input(input) do
