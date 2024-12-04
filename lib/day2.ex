@@ -6,14 +6,16 @@ defmodule Day2 do
 
   def part1(input) do
     input
-    |> Enum.map(&String.split(&1, ~r/\s+/, trim: true))
-    |> Enum.map(fn report -> Enum.map(report, &String.to_integer/1) end)
+    |> parse_report()
     |> Enum.map(&strictly_monotonic_and_gradual?/1)
     |> Enum.count(& &1)
   end
 
-  def part2(_input) do
-    "Part 2"
+  def part2(input) do
+    input
+    |> parse_report()
+    |> Enum.map(&safe_with_problem_dampner?/1)
+    |> Enum.count(& &1)
   end
 
   defp strictly_monotonic_and_gradual?(list) do
@@ -27,5 +29,22 @@ defmodule Day2 do
       )
 
     (inc || dec) && gradual
+  end
+
+  defp safe_with_problem_dampner?(list) do
+    if strictly_monotonic_and_gradual?(list) do
+      true
+    else
+      Enum.with_index(list)
+      |> Enum.any?(fn {_, index} ->
+        strictly_monotonic_and_gradual?(List.delete_at(list, index))
+      end)
+    end
+  end
+
+  defp parse_report(report) do
+    report
+    |> Enum.map(&String.split(&1, ~r/\s+/, trim: true))
+    |> Enum.map(fn report -> Enum.map(report, &String.to_integer/1) end)
   end
 end
