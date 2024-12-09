@@ -33,4 +33,23 @@ defmodule Day4Test do
 
     assert Day4.part1(input) == 18
   end
+
+  test "counting the number of occurances of an 'X-MAS'" do
+    # input =
+    #   [
+    #     "MMMSXXMASM",
+    #     "MSAMXMSMSA",
+    #     "AMXSXMAAMM",
+    #     "MSAMASMSMX",
+    #     "XMASAMXAMM",
+    #     "XXAMMXXAMA",
+    #     "SMSMSASXSS",
+    #     "SAXAMASAAA",
+    #     "MAMMMXMMMM",
+    #     "MXMXAXMASX"
+    #   ]
+    #   |> Enum.map(&String.graphemes/1)
+
+    # assert Day4.part2(input) == 9
+  end
 end
