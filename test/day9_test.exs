@@ -41,4 +41,9 @@ defmodule Day9Test do
   # 0221112...22...
   # 02211122..2....
   # 022111222......
+
+  test "compress disk" do
+    input = [0, nil, nil, 1, 1, 1, nil, nil, nil, nil, 2, 2, 2, 2, 2]
+    assert Day9.compress_disk(input) == [0, 2, 2, 1, 1, 1, 2, 2, 2]
+  end
 end
