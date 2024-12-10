@@ -1,8 +1,8 @@
 defmodule Day9 do
   def load_input(filename) do
     File.read!(filename)
-    |> String.graphemes()
-    |> Enum.map(&String.to_integer/1)
+    |> String.to_integer()
+    |> Integer.digits()
   end
 
   def part1(_input) do
