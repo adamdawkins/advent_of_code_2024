@@ -5,12 +5,23 @@ defmodule Day9 do
     |> Integer.digits()
   end
 
-  def part1(_input) do
-    IO.puts("Part 1 not implemented")
+  def part1(input) do
+    input
+    |> expand_map()
+    |> compress_disk()
+    |> checksum()
   end
 
   def part2(_input) do
     IO.puts("Part 2 not implemented")
+  end
+
+  def checksum(disk) do
+    disk
+    |> Enum.with_index()
+    |> Enum.reduce(0, fn
+      {block_id, position}, acc -> acc + block_id * position
+    end)
   end
 
   def expand_map(input) do

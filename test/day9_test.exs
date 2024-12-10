@@ -54,4 +54,9 @@ defmodule Day9Test do
     # Converted this one to a string because the Elixir formatter likes to
     # split long arrays into multiple lines
   end
+
+  test "part 1 returns the checksum" do
+    input = [2, 3, 3, 3, 1, 3, 3, 1, 2, 1, 4, 1, 4, 1, 3, 1, 4, 0, 2]
+    assert Day9.part1(input) == 1928
+  end
 end
