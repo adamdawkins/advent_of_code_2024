@@ -8,7 +8,9 @@ defmodule Day10 do
   def part1(grid) do
     initial_coords = coordinates_of_digit(grid, 0)
 
-    paths(grid, initial_coords, 1)
+    max_digit = grid |> Enum.flat_map(& &1) |> Enum.max()
+
+    paths(grid, initial_coords, 1, max_digit)
     |> Enum.count()
   end
 
@@ -20,17 +22,17 @@ defmodule Day10 do
     Enum.at(grid, y) |> Enum.at(x)
   end
 
-  defp paths(_grid, coords, 10) do
+  defp paths(_grid, coords, target_digit, max_digit) when target_digit > max_digit do
     coords
   end
 
-  defp paths(grid, coords, target_digit) do
+  defp paths(grid, coords, target_digit, max_digit) do
     new_coords =
       coords
       |> Enum.flat_map(fn coord -> neighbours(grid, coord) end)
       |> Enum.filter(fn coord -> digit_at(grid, coord) == target_digit end)
 
-    paths(grid, new_coords, target_digit + 1)
+    paths(grid, new_coords, target_digit + 1, max_digit)
   end
 
   defp neighbours(grid, {x, y}) do
