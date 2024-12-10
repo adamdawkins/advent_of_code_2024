@@ -10,8 +10,13 @@ defmodule Day10 do
 
     max_digit = grid |> Enum.flat_map(& &1) |> Enum.max()
 
-    paths(grid, initial_coords, 1, max_digit)
-    |> Enum.count()
+    initial_coords
+    |> Enum.map(fn coord ->
+      paths(grid, [coord], 1, max_digit)
+    end)
+    |> Enum.map(&Enum.uniq/1)
+    |> Enum.map(&length/1)
+    |> Enum.sum()
   end
 
   def part2(_input) do
