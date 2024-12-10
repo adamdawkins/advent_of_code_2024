@@ -2,15 +2,17 @@ defmodule Day10 do
   def load_input(filename) do
     File.read!(filename)
     |> String.split("\n", trim: true)
-    |> Enum.map(&String.graphemes/1)
+    |> Enum.map(fn line ->
+      line
+      |> String.graphemes()
+      |> Enum.map(&String.to_integer/1)
+    end)
   end
 
   def part1(grid) do
-    initial_coords = coordinates_of_digit(grid, 0)
-
     max_digit = grid |> Enum.flat_map(& &1) |> Enum.max()
 
-    initial_coords
+    coordinates_of_digit(grid, 0)
     |> Enum.map(fn coord ->
       paths(grid, [coord], 1, max_digit)
     end)
@@ -19,8 +21,13 @@ defmodule Day10 do
     |> Enum.sum()
   end
 
-  def part2(_input) do
-    "Day 10 Part 2"
+  def part2(grid) do
+    max_digit = grid |> Enum.flat_map(& &1) |> Enum.max()
+
+    initial_coordinates = coordinates_of_digit(grid, 0)
+
+    paths(grid, initial_coordinates, 1, max_digit)
+    |> length()
   end
 
   defp digit_at(grid, {x, y}) do
