@@ -45,5 +45,13 @@ defmodule Day9Test do
   test "compress disk" do
     input = [0, nil, nil, 1, 1, 1, nil, nil, nil, nil, 2, 2, 2, 2, 2]
     assert Day9.compress_disk(input) == [0, 2, 2, 1, 1, 1, 2, 2, 2]
+
+    assert Day9.expand_map([2, 3, 3, 3, 1, 3, 3, 1, 2, 1, 4, 1, 4, 1, 3, 1, 4, 0, 2])
+           |> Day9.compress_disk()
+           |> Enum.map(&Integer.to_string/1)
+           |> Enum.join() == "0099811188827773336446555566"
+
+    # Converted this one to a string because the Elixir formatter likes to
+    # split long arrays into multiple lines
   end
 end
