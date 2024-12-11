@@ -13,12 +13,9 @@ defmodule Day9 do
   end
 
   def part2(_input) do
-    IO.puts("Part 2 not implemented")
   end
 
   def checksum(disk) do
-    IO.puts("Calculating checksum...")
-
     disk
     |> Enum.with_index()
     |> Enum.reduce(0, fn
@@ -29,8 +26,6 @@ defmodule Day9 do
   end
 
   def expand_map(input) do
-    IO.puts("Expanding map...")
-
     input
     |> Enum.chunk_every(2)
     |> Enum.with_index()
@@ -38,7 +33,6 @@ defmodule Day9 do
   end
 
   def compress_disk(disk) do
-    IO.puts("Compressing disk... #{length(disk)}")
     move_file(disk)
   end
 
@@ -61,8 +55,6 @@ defmodule Day9 do
   end
 
   defp move_file(disk) do
-    IO.puts("Moving file... #{last_file(disk)}/#{length(disk)} to space at #{first_space(disk)}")
-
     case {last_file(disk), first_space(disk)} do
       # No file to move
       {nil, _space_index} ->
