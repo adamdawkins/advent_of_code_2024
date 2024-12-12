@@ -4,15 +4,7 @@ defmodule Day6 do
       File.read!(filename)
       |> String.split("\n", trim: true)
 
-    {row, col, direction} =
-      Enum.reduce_while(map, {0, 0, nil}, fn line, {r, _, nil} ->
-        case String.match?(line, ~r/[<>^v]/) do
-          nil -> {:cont, {r + 1, 0, nil}}
-          col -> {:halt, {r, col, String.at(line, col)}}
-        end
-      end)
-
-    {map, row, col, direction}
+    parse_map(map)
   end
 
   def part1({map, row, col, direction}) do
@@ -33,6 +25,10 @@ defmodule Day6 do
     visited = MapSet.new([{row, col}])
 
     simulate_path(map, row, col, direction, directions, turn_right, visited)
+  end
+
+  def part2(_input) do
+    "Part 2"
   end
 
   defp simulate_path(map, row, col, direction, directions, turn_right, visited) do
@@ -62,5 +58,24 @@ defmodule Day6 do
 
   defp out_of_bounds?(map, row, col) do
     row < 0 or col < 0 or row >= length(map) or col >= String.length(Enum.at(map, 0))
+  end
+
+  defp parse_map(map) do
+    {row, col, direction} =
+      Enum.reduce_while(map, {0, 0, nil}, fn line, {r, _, nil} ->
+        case find_guard(line) do
+          nil -> {:cont, {r + 1, 0, nil}}
+          {c, char} -> {:halt, {r, c, char}}
+        end
+      end)
+
+    {map, row, col, direction}
+  end
+
+  defp find_guard(line) do
+    Enum.find_value(0..(String.length(line) - 1), fn index ->
+      char = String.at(line, index)
+      if char in ["^", "v", "<", ">"], do: {index, char}, else: nil
+    end)
   end
 end
