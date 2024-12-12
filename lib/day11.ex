@@ -1,37 +1,74 @@
 require Integer
 
 defmodule Day11 do
+  @cache %{}
+
+  def count(stone, steps, cache \\ %{}) do
+    IO.inspect(cache)
+
+    case Map.get(cache, {stone, steps}) do
+      nil ->
+        result = _count(stone, steps, cache)
+        Map.put(cache, {stone, steps}, result)
+
+        result
+
+      result ->
+        IO.puts("retreived #{stone}, #{steps} from cache")
+        result
+    end
+  end
+
+  defp put_cache(input, result) do
+    Module.put_attribute(__MODULE__, :cache, Map.put(@cache, input, result))
+  end
+
   def load_input(filename) do
     File.read!(filename)
     |> String.split("\s", trim: true)
     |> Enum.map(&String.to_integer/1)
   end
 
-  def part1(input) do
-    Enum.reduce(1..25, input, fn _i, acc ->
-      blink(acc)
+  def part1(stones) do
+    Enum.map(stones, fn stone ->
+      count(stone, 25)
     end)
-    |> Enum.count()
+    |> Enum.sum()
   end
 
-  def part2(_input) do
-    "Part 2"
+  def part2(stones) do
+    Enum.map(stones, fn stone ->
+      count(stone, 75)
+    end)
+    |> Enum.sum()
   end
 
-  def blink(stones) do
-    stones
-    |> Enum.flat_map(&blink_stone/1)
-  end
+  defp _count(_stone, 0, _cache), do: 1
+  defp _count(0, steps, cache), do: count(1, steps - 1, cache)
 
-  defp blink_stone(0), do: [1]
-
-  defp blink_stone(n) do
-    if even_number_of_digits?(n) do
-      split_in_half(n)
+  defp _count(stone, steps, cache) do
+    if even_number_of_digits?(stone) do
+      split_in_half(stone)
+      |> Enum.map(fn n -> count(n, steps - 1, cache) end)
+      |> Enum.sum()
     else
-      [n * 2024]
+      count(stone * 2024, steps - 1, cache)
     end
   end
+
+  # def blink(stones, steps) do
+  #   Enum.flat_map(stones, fn stone ->
+  #     blink_stone(stone, steps)
+  #   end)
+  # end
+
+  # defp blink_stone(stone, steps) do
+  #   if even_number_of_digits?(stone) do
+  #     split_in_half(stone)
+  #   else
+  #     [n * 2024]
+  #   end
+  # end
 
   defp even_number_of_digits?(n) do
     Integer.digits(n)

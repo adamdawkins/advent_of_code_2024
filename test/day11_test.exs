@@ -17,10 +17,6 @@ defmodule Day11Test do
   # So, after blinking once, your five stones would become an arrangement of
   # seven stones engraved with the numbers
   # 1 2024 1 0 9 9 2021976.
-  test "blink" do
-    input = [0, 1, 10, 99, 999]
-    assert Day11.blink(input) == [1, 2024, 1, 0, 9, 9, 2_021_976]
-  end
 
   test "part1" do
     input = [125, 17]
