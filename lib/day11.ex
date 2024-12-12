@@ -1,11 +1,7 @@
 require Integer
 
 defmodule Day11 do
-  @cache %{}
-
   def count(stone, steps, cache \\ %{}) do
-    IO.inspect(cache)
-
     case Map.get(cache, {stone, steps}) do
       nil ->
         result = _count(stone, steps, cache)
@@ -14,13 +10,8 @@ defmodule Day11 do
         result
 
       result ->
-        IO.puts("retreived #{stone}, #{steps} from cache")
         result
     end
-  end
-
-  defp put_cache(input, result) do
-    Module.put_attribute(__MODULE__, :cache, Map.put(@cache, input, result))
   end
 
   def load_input(filename) do
